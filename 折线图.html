@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>能力发展折线图</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-box {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-box">
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <script>
+        // 图表配置
+        const config = {
+            type: 'line',
+            data: {
+                labels: ['行为规则力', '友谊联结力', '自我认知力', '情绪调节力',
+                        '生活自理力', '要事优先力', '善于学习力', '乐享学习力'],
+                datasets: [{
+                    label: '入学初',
+                    data: [5, 7, 5, 6, 6.6, 6.6, 7.1, 7.1],
+                    borderColor: '#FF6B6B',
+                    backgroundColor: 'rgba(255,107,107,0.1)',
+                    tension: 0.3,
+                    pointRadius: 6,
+                    borderWidth: 2
+                },{
+                    label: '实施后',
+                    data: [8, 9.8, 8, 8.5, 9.7, 9.5, 9.5, 9.2],
+                    borderColor: '#4ECDC4',
+                    backgroundColor: 'rgba(78,205,196,0.1)',
+                    tension: 0.3,
+                    pointRadius: 6,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '二孩新生能力发展对比折线图',
+                        font: { size: 18 }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}分`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 10,
+                        ticks: { stepSize: 2 },
+                        title: {
+                            display: true,
+                            text: '能力评分'
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        title: {
+                            display: true,
+                            text: '能力维度'
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        borderWidth: 2
+                    }
+                }
+            }
+        };
+
+        // 初始化图表
+        const ctx = document.getElementById('lineChart').getContext('2d');
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>
